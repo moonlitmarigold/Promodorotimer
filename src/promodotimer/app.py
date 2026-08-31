@@ -5,8 +5,8 @@ class PromodoWindow(QtWidgets.QWidget):
     def __init__(self):
         super().__init__()
 
-        self.button = QtWidgets.QPushButton("Click me!")
-        self.text = QtWidgets.QLabel("Hello World", alignment=QtCore.Qt.AlignCenter)
+        self.button = QtWidgets.QPushButton("67")
+        self.text = QtWidgets.QLabel("1984", alignment=QtCore.Qt.AlignCenter)
 
         self.layout = QtWidgets.QVBoxLayout(self)
         self.layout.addWidget(self.text)
