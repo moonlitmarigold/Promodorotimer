@@ -12,8 +12,29 @@ class PromodoWindow(QtWidgets.QWidget):
         self.layout.addWidget(self.text)
         self.layout.addWidget(self.button)
 
+        self.timer()
+
         self.button.clicked.connect(self.magic)
 
     @QtCore.Slot()
     def magic(self):
         self.text.setText('Hello')
+
+    def timer(self):
+        self.timer = QtWidgets.QLabel("25:00")
+        font = self.timer.font()
+        font.setPixelSize(36)
+        font.setBold(True)
+        self.timer.setFont(font)
+
+    def settings(self):
+        ...
+
+    def tasks(self):
+        ...
+
+    def popup_button(self):
+        ...
+
+    def presets(self):
+        ...
