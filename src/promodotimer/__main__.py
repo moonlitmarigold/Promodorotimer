@@ -1,9 +1,9 @@
 import sys
-from .ui import MainWindow
+from .app import PromodoWindow
 from PySide6 import QtWidgets
 
 if __name__ == '__main__':
     app = QtWidgets.QApplication([])
-    widget = MainWindow()
+    widget = PromodoWindow()
     widget.showMaximized()
     sys.exit(app.exec())

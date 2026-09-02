@@ -1,31 +1,36 @@
 import sys
 from PySide6 import QtCore, QtWidgets, QtGui
 
-class PromodoWindow(QtWidgets.QWidget):
+class PromodoWindow(QtWidgets.QMainWindow):
     def __init__(self):
         super().__init__()
 
-        self.button = QtWidgets.QPushButton("67")
-        self.text = QtWidgets.QLabel("1984", alignment=QtCore.Qt.AlignCenter)
+        # Variables
+        self.timer = self.return_timer()
 
         self.layout = QtWidgets.QVBoxLayout(self)
-        self.layout.addWidget(self.text)
-        self.layout.addWidget(self.button)
 
-        self.timer()
+        # Layout
+        self.layout.addWidget(self.timer)
 
-        self.button.clicked.connect(self.magic)
+        self.finish()
 
-    @QtCore.Slot()
-    def magic(self):
-        self.text.setText('Hello')
 
-    def timer(self):
-        self.timer = QtWidgets.QLabel("25:00")
-        font = self.timer.font()
+    @staticmethod
+    def return_timer():
+        timer = QtWidgets.QLabel("25:00")
+        font = timer.font()
         font.setPixelSize(36)
         font.setBold(True)
-        self.timer.setFont(font)
+        timer.setFont(font)
+
+        return timer
+
+    def timer_start_button(self):
+        start_button = QtWidgets.QPushButton("Start")
+        start_button.setFixedWidth(100)
+        start_button.clicked.connect(self.on_start_button)
+
 
     def settings(self):
         ...
@@ -38,3 +43,12 @@ class PromodoWindow(QtWidgets.QWidget):
 
     def presets(self):
         ...
+
+    def finish(self):
+        central_widget = QtWidgets.QWidget()
+        central_widget.setLayout(self.layout)
+        self.setCentralWidget(central_widget)
+
+    @QtCore.Slot()
+    def on_start_button(self):
+        self.timer.setText("sometext")
