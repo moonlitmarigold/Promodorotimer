@@ -1,0 +1,8 @@
+{
+  "presets": [
+    {
+      "preset_id": 0,
+      "time_sec": 1500
+    }
+  ]
+}
