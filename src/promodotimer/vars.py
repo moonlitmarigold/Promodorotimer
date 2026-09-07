@@ -1,3 +1,6 @@
+import dataclasses
+from enum import Enum
+
 SETTING_CLASSES = {}
 
 
@@ -11,6 +14,30 @@ DEFAULT_SETTINGS = {
 
 }
 
-def default_setting(cls, name):
-    DEFAULT_SETTINGS[name] = cls.default()
-    return cls
+def default_setting(name:str):
+    def wrap(cls):
+        DEFAULT_SETTINGS[name.lower().strip()] = cls.default(cls)
+        return cls
+    return wrap
+
+@dataclasses.dataclass
+class Preset:
+
+    time_sec:int
+    pause_time_sec:int
+
+    preset_id:int = 0
+
+class Status(Enum):
+
+    unfinished = "unfinished"
+    finished = "finished"
+
+@dataclasses.dataclass
+class Task:
+
+    text:str
+    status:Status = Status.unfinished
+
+    def set_finished(self):
+        self.status = Status.finished
