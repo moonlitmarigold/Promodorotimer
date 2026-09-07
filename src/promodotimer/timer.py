@@ -23,14 +23,14 @@ class Timer(QtCore.QObject):
     @property
     def start_duration(self):
         if not self._start_duration:
-            raise InternalDurationNotSet
+            raise InternalDurationNotSet()
 
         return self._start_duration
 
     @property
     def remaining(self):
         if not self._start_duration:
-            raise InternalDurationNotSet
+            raise InternalDurationNotSet()
 
         return self._remaining
 
@@ -39,7 +39,7 @@ class Timer(QtCore.QObject):
         return self._ticker.isActive()
 
     def toggle(self):
-        if self.is_running:
+        if not self.is_running:
             self._deadline = QtCore.QDeadlineTimer(self._remaining * 1000)
             self._ticker.start()
             self.started.emit()
@@ -53,12 +53,21 @@ class Timer(QtCore.QObject):
         self._start_duration = duration
         self._remaining = duration
 
+    def reset_to_duration_seconds(self):
+        if self.is_running:
+            self.toggle()
+        self._remaining = self._start_duration
+
     def _on_tick(self):
         remaining = max(0, -(-self._deadline.remainingTime() // 1000))  # ceil
-        if remaining == self._remaining:
+        if remaining == self.remaining:
             return  # same whole second, nothing to redraw
         self._remaining = remaining
         self.tick.emit(remaining)
         if remaining == 0:
             self._ticker.stop()
             self.finished.emit()
+
+    @staticmethod
+    def format_time(seconds: int) -> str:
+        return f"{seconds // 60:02d}:{seconds % 60:02d}"
