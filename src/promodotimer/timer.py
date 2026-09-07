@@ -1,5 +1,6 @@
 from PySide6 import QtCore
 from .errors import InternalDurationNotSet
+from .vars import Preset
 
 class Timer(QtCore.QObject):
 
@@ -12,7 +13,9 @@ class Timer(QtCore.QObject):
         super().__init__()
 
         self._start_duration = None
+        self._start_breaK = None
         self._remaining = None
+        self.is_break = False
 
         self._deadline = QtCore.QDeadlineTimer()
         self._ticker = QtCore.QTimer(self)
@@ -52,6 +55,12 @@ class Timer(QtCore.QObject):
     def set_duration_seconds(self, duration:int):
         self._start_duration = duration
         self._remaining = duration
+
+    def set_from_preset(self, p:Preset):
+        self._start_duration = p.time_sec
+        self._start_breaK = p.pause_time_sec
+        self._remaining = self._start_duration
+        self.is_break = False
 
     def reset_to_duration_seconds(self):
         if self.is_running:
