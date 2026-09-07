@@ -1,15 +1,16 @@
 from pathlib import Path
 from PySide6 import QtCore
 from dataclasses import dataclass
-from . import presets
+from . import presets as _presets
 import json
 from .vars import SETTING_CLASSES, DEFAULT_SETTINGS
 from pydantic import BaseModel, ValidationError
+from pydantic.fields import Field
 
 
 class Settings(BaseModel):
 
-    presets:list[presets.Preset] = DEFAULT_SETTINGS.get('presets')
+    presets:_presets.Presets = Field(default_factory=lambda: DEFAULT_SETTINGS.get('presets'))
 
     @staticmethod
     def config_path() -> Path:
@@ -21,8 +22,8 @@ class Settings(BaseModel):
         return Path(base) / "promodo_settings.json"
 
     @classmethod
-    def load(cls):
-        path = Settings.config_path()
+    def load(cls, override:Path | None = None):
+        path = Settings.config_path() if not override else override
 
         if not path.exists():
             return cls()
@@ -31,8 +32,8 @@ class Settings(BaseModel):
         except (ValidationError, OSError, ValueError):
               return cls()
 
-    def save(self) -> None:
-        path = self.config_path()
+    def save(self, override:Path | None = None) -> None:
+        path = Settings.config_path() if not override else override
         path.parent.mkdir(parents=True, exist_ok=True)
         tmp = path.with_suffix(".json.tmp")
         tmp.write_text(self.model_dump_json(indent=2), encoding="utf-8")
