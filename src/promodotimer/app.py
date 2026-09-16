@@ -1,18 +1,19 @@
 import sys
 from PySide6 import QtCore, QtWidgets, QtGui
-from .timer import Timer
+
+from . import settings
 from .presets import Preset
+from .settings import Settings
+from .timer import TimerUI
 
 class PomodoroWindow(QtWidgets.QMainWindow):
     def __init__(self):
         super().__init__()
 
         # Variables
+        self.settings = Settings.load()
+        self.timer_ui = TimerUI(self, self.settings)
 
-        self.timer_logic = self.return_timer_logic()
-
-        self.timer_label = self.return_timer_label()
-        self.start_button = self.return_timer_start_button()
         self.settings_button = self.return_settings_button()
 
         # Layout
@@ -20,7 +21,6 @@ class PomodoroWindow(QtWidgets.QMainWindow):
         # MainScreen
 
         # Layout horizontal mid
-
         self.horizontal_mid_layout = QtWidgets.QHBoxLayout()
 
         # Layout vertical bottom
@@ -102,37 +102,6 @@ class PomodoroWindow(QtWidgets.QMainWindow):
         self.setCentralWidget(self.central_widget)
 
 
-
-    def return_timer_label(self):
-        timer_label = QtWidgets.QLabel("25:00")
-        font = timer_label.font()
-        font.setPixelSize(36)
-        font.setBold(True)
-        timer_label.setFont(font)
-
-        return timer_label
-
-    def return_timer_logic(self):
-        timer_logic = Timer()
-        #timer_logic.set_duration_seconds(25 * 60)  # later: from your Preset
-        timer_logic.set_from_preset(Preset(25 * 60, 5*60))
-
-        timer_logic.tick.connect(self.on_tick)
-        timer_logic.started.connect(self.on_started)
-        timer_logic.paused.connect(self.on_paused)
-        timer_logic.finished.connect(self.on_finished)
-
-        return timer_logic
-
-
-    def return_timer_start_button(self):
-        start_button = QtWidgets.QPushButton("Start")
-        start_button.setFixedWidth(100)
-        start_button.clicked.connect(self.on_start_button)
-
-        return start_button
-
-
     def return_settings_button(self):
         settings_button = QtWidgets.QPushButton("Settings")
         settings_button.setFixedWidth(50)
@@ -150,32 +119,6 @@ class PomodoroWindow(QtWidgets.QMainWindow):
     def presets(self):
         ...
 
-    @staticmethod
-    def format_time(seconds: int) -> str:
-        return f"{seconds // 60:02d}:{seconds % 60:02d}"
-
-    @QtCore.Slot()
-    def on_start_button(self):
-        self.timer_logic.toggle()
-
-    @QtCore.Slot(int)
-    def on_tick(self, remaining: int):
-        self.timer_label.setText(self.format_time(remaining))
-
-    @QtCore.Slot()
-    def on_started(self):
-        self.start_button.setText("Pause")
-        self.timer_label.setText(self.format_time(self.timer_logic.remaining))
-
-    @QtCore.Slot()
-    def on_paused(self):
-        self.start_button.setText("Start")
-
-    @QtCore.Slot()
-    def on_finished(self):
-        self.start_button.setText("Start")
-        self.timer_logic.reset_to_duration_seconds()
-        self.timer_label.setText(self.format_time(self.timer_logic.remaining))
 
     @QtCore.Slot()
     def on_settings_button(self):
