@@ -2,7 +2,7 @@
   "presets": {
     "_list": [
       {
-        "time_sec": 1500,
+        "time_sec": 1,
         "pause_time_sec": 300,
         "preset_id": 0
       },
@@ -22,5 +22,9 @@
         "preset_id": 3
       }
     ]
+  },
+  "user_settings": {
+    "auto_start_breaks": true,
+    "sound_enabled": true
   }
 }

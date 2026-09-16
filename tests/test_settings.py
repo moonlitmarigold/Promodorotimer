@@ -24,9 +24,25 @@ def test_save_settings():
     print(s.presets.all)
     print(s.presets)
 
+    print(s.user_settings)
+
     s.save(override=test_settings_output)
 
 def test_load_settings():
     s = Settings.load(override=test_settings)
 
     print(s.presets)
+
+def test_user_settings_round_trip(tmp_path):
+    path = tmp_path / 'settings.json'
+    s = Settings()
+    s.user_settings.auto_start_breaks = True
+    s.save(override=path)
+
+    assert Settings.load(override=path).user_settings.auto_start_breaks is True
+
+
+def test_user_settings_default_when_missing_from_file():
+    s = Settings.load(override=test_settings)
+
+    assert s.user_settings == settings.UserSettings()

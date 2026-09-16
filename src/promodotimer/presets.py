@@ -35,4 +35,4 @@ class Presets: # Preset
 
     @staticmethod
     def default(cls):
-        return cls.load(*[dataclasses.asdict(Preset(25 * 60, 5 * 60))])
+        return cls.load(*[dataclasses.asdict(Preset(1, 5 * 60))])

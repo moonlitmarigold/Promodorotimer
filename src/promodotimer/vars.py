@@ -3,7 +3,6 @@ from enum import Enum
 
 SETTING_CLASSES = {}
 
-
 def settings_register(cls):
     SETTING_CLASSES[cls.__name__] = cls
     return cls

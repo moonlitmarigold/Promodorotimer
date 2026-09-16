@@ -8,9 +8,16 @@ from pydantic import BaseModel, ValidationError
 from pydantic.fields import Field
 
 
+class UserSettings(BaseModel):
+    # One typed field per setting; `title` is the label shown in the settings screen.
+    auto_start_breaks: bool = Field(default=True, title="Auto-start breaks")
+    sound_enabled: bool = Field(default=True, title="Play sound when a timer ends")
+
+
 class Settings(BaseModel):
 
     presets:_presets.Presets = Field(default_factory=lambda: DEFAULT_SETTINGS.get('presets'))
+    user_settings: UserSettings = Field(default_factory=UserSettings)
 
     @staticmethod
     def config_path() -> Path:
@@ -38,11 +45,3 @@ class Settings(BaseModel):
         tmp = path.with_suffix(".json.tmp")
         tmp.write_text(self.model_dump_json(indent=2), encoding="utf-8")
         tmp.replace(path)
-
-
-
-
-
-
-
-
