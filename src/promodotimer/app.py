@@ -1,6 +1,7 @@
 import sys
 from PySide6 import QtCore, QtWidgets, QtGui
 from .timer import Timer
+from .presets import Preset
 
 class PomodoroWindow(QtWidgets.QMainWindow):
     def __init__(self):
@@ -113,7 +114,8 @@ class PomodoroWindow(QtWidgets.QMainWindow):
 
     def return_timer_logic(self):
         timer_logic = Timer()
-        timer_logic.set_duration_seconds( 25 * 60)  # later: from your Preset
+        #timer_logic.set_duration_seconds(25 * 60)  # later: from your Preset
+        timer_logic.set_from_preset(Preset(25 * 60, 5*60))
 
         timer_logic.tick.connect(self.on_tick)
         timer_logic.started.connect(self.on_started)

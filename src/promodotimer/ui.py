@@ -28,3 +28,9 @@ class MainWindow(QtWidgets.QMainWindow):
     @QtCore.Slot()
     def OnStartButtonClick(self):
         self.timer.setText("sometext")
+
+class Buttons:
+
+    @staticmethod
+    def return_button():
+        return None
