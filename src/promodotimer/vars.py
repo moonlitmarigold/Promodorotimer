@@ -1,5 +1,6 @@
 import dataclasses
 from enum import Enum
+from PySide6 import QtWidgets
 
 SETTING_CLASSES = {}
 
@@ -38,5 +39,8 @@ class Task:
     text:str
     status:Status = Status.unfinished
 
+    internal_id:int = 0
+
     def set_finished(self):
         self.status = Status.finished
+

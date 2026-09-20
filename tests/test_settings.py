@@ -3,6 +3,8 @@ from promodotimer.settings import Settings
 from pathlib import Path
 import json
 
+from vars import Preset
+
 test_settings = Path(__file__).parent / 'test_settings.json'
 test_settings_output = Path(__file__).parent / 'test_settings_output.json'
 
@@ -17,14 +19,17 @@ def test_default_settings():
 def test_save_settings():
     s = Settings.load()
 
-    s.presets.add(settings._presets.Preset(70 * 60, 5 * 60))
-    s.presets.add(settings._presets.Preset(10 * 60, 5 * 60))
-    s.presets.add(settings._presets.Preset(20 * 60, 5 * 60))
+    #s.presets.add(settings._presets.Preset(70 * 60, 5 * 60))
+    #s.presets.add(settings._presets.Preset(10 * 60, 5 * 60))
+    #s.presets.add(settings._presets.Preset(20 * 60, 5 * 60))
+
+    pre = Preset(50*60, 5*60)
+    s.presets.add(pre)
 
     print(s.presets.all)
-    print(s.presets)
+    #print(s.presets)
 
-    print(s.user_settings)
+    #print(s.user_settings)
 
     s.save(override=test_settings_output)
 
