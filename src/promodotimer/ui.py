@@ -33,7 +33,6 @@ class PresetsButton:
 
 
     @QtCore.Slot()
-<<<<<<< Updated upstream
     def OnStartButtonClick(self):
         self.timer.setText("sometext")
 
@@ -42,7 +41,6 @@ class Buttons:
     @staticmethod
     def return_button():
         return None
-=======
+
     def on_confirm_button(self):
         ...
->>>>>>> Stashed changes
