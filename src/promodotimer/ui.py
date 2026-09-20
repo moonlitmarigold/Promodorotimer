@@ -1,31 +1,39 @@
-from PySide6 import QtWidgets,QtCore
+from PySide6 import QtCore, QtWidgets, QtGui
 
-class MainWindow(QtWidgets.QMainWindow):
+
+class PresetsButton:
+
     def __init__(self):
-        super().__init__()
+        self.background = QtWidgets.QWidget()
+        self.background.setStyleSheet("background-color: white;")
 
-        layout = QtWidgets.QVBoxLayout()
-        layout.setAlignment(QtCore.Qt.AlignmentFlag.AlignCenter)
-        layout.setSpacing(15)
+        self.layoutVert = QtWidgets.QVBoxLayout()
 
-        self.timer = QtWidgets.QLabel("25:00")
-        font = self.timer.font()
-        font.setPixelSize(36)
-        font.setBold(True)
-        self.timer.setFont(font)
+        self.layoutWork = QtWidgets.QHBoxLayout()
 
-        startbutton = QtWidgets.QPushButton("Start")
-        startbutton.setFixedWidth(100)
-        startbutton.clicked.connect(self.OnStartButtonClick)
+        self.layoutWork.addWidget(QtWidgets.QLabel("Work"))
+        self.workLineEdit = QtWidgets.QLineEdit()
+        self.layoutWork.addWidget(self.workLineEdit)
 
-        layout.addWidget(self.timer)
-        layout.addWidget(startbutton)
+        self.layoutPause = QtWidgets.QHBoxLayout()
 
-        centralWiget = QtWidgets.QWidget()
-        centralWiget.setLayout(layout)
-        self.setCentralWidget(centralWiget)
+        self.layoutPause.addWidget(QtWidgets.QLabel("Pause"))
+        self.pauseLineEdit = QtWidgets.QLineEdit()
+        self.layoutPause.addWidget(self.pauseLineEdit)
+
+        self.confirmButton = QtWidgets.QPushButton("Confirm")
+        self.confirmButton.clicked.connect(self.on_confirm_button)
+
+        self.layoutVert.addLayout(self.layoutWork)
+        self.layoutVert.addLayout(self.layoutPause)
+        self.layoutVert.addWidget(self.confirmButton)
+
+        self.background.setLayout(self.layoutVert)
+
+
 
     @QtCore.Slot()
+<<<<<<< Updated upstream
     def OnStartButtonClick(self):
         self.timer.setText("sometext")
 
@@ -34,3 +42,7 @@ class Buttons:
     @staticmethod
     def return_button():
         return None
+=======
+    def on_confirm_button(self):
+        ...
+>>>>>>> Stashed changes

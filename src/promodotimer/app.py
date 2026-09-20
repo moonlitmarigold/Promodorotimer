@@ -2,6 +2,8 @@ from PySide6 import QtCore, QtWidgets
 
 from .settings import Settings
 from .timer import TimerUI
+from .timer import Timer
+from .ui import PresetsButton
 
 class PomodoroWindow(QtWidgets.QMainWindow):
     def __init__(self):
@@ -66,13 +68,14 @@ class PomodoroWindow(QtWidgets.QMainWindow):
 
         task_1 = QtWidgets.QLabel("megaTask1")
         task_2 = QtWidgets.QLabel("megaTask2")
-        task_3 = QtWidgets.QPushButton("+")
+        self.task_button = QtWidgets.QPushButton("+")
+        self.task_button.clicked.connect(self.on_add_task)
 
         self.vertical_mid_layout_tasks.addStretch()
         self.vertical_mid_layout_tasks.addWidget(tasks_label, alignment=QtCore.Qt.AlignmentFlag.AlignHCenter)
         self.vertical_mid_layout_tasks.addWidget(task_1, alignment=QtCore.Qt.AlignmentFlag.AlignHCenter)
         self.vertical_mid_layout_tasks.addWidget(task_2, alignment=QtCore.Qt.AlignmentFlag.AlignHCenter)
-        self.vertical_mid_layout_tasks.addWidget(task_3, alignment=QtCore.Qt.AlignmentFlag.AlignHCenter)
+        self.vertical_mid_layout_tasks.addWidget(self.task_button, alignment=QtCore.Qt.AlignmentFlag.AlignHCenter)
         self.vertical_mid_layout_tasks.addStretch()
 
         self.horizontal_mid_layout.addStretch(1)
@@ -120,3 +123,13 @@ class PomodoroWindow(QtWidgets.QMainWindow):
     @QtCore.Slot()
     def on_settings_button(self):
         self.central_widget.setCurrentWidget(self.settings_page)
+
+    @QtCore.Slot()
+    def on_add_task(self):
+        ...
+
+    @QtCore.Slot()
+    def on_add_preset(self):
+        new_pres_button = PresetsButton()
+        self.presets_grid.addWidget(new_pres_button.background, 0, 1)
+
