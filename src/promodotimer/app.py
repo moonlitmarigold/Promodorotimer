@@ -1,8 +1,5 @@
-import sys
-from PySide6 import QtCore, QtWidgets, QtGui
+from PySide6 import QtCore, QtWidgets
 
-from . import settings
-from .presets import Preset
 from .settings import Settings
 from .timer import TimerUI
 
