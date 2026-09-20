@@ -1,4 +1,4 @@
-from .vars import Task, Status
+from vars import Task, Status
 import dataclasses
 
 @dataclasses.dataclass

@@ -1,5 +1,4 @@
 from PySide6 import QtCore, QtWidgets
-
 from .settings import Settings
 from .timer import TimerUI
 from .timer import Timer

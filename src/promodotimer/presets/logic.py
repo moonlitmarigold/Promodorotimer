@@ -1,5 +1,5 @@
 import dataclasses
-from .vars import default_setting, Preset
+from ..vars import default_setting, Preset
 
 @default_setting('presets')
 @dataclasses.dataclass
